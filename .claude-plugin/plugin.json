@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "itr-wala",
+  "displayName": "ITR Wala",
+  "description": "File your Indian income tax return (ITR) from your terminal - deterministic tax engine, both regimes, AY 2026-27.",
+  "author": {
+    "name": "Karan Bansal",
+    "url": "https://karanbansal.in"
+  },
+  "homepage": "https://github.com/karanb192/itr-wala",
+  "repository": "https://github.com/karanb192/itr-wala",
+  "license": "MIT",
+  "keywords": ["itr", "india", "income-tax", "tax-filing", "form-16", "ais", "regime-comparison"]
+}

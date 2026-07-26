@@ -1,0 +1,27 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  golden-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run golden test suite
+        run: python3 skills/itr-wala/scripts/test_tax_engine.py
+      - name: Run validator test suite
+        run: python3 skills/itr-wala/scripts/test_validate_income.py
+      - name: Property fuzz (seeded, deterministic)
+        run: python3 skills/itr-wala/scripts/fuzz_engine.py --cases 3000 --seed 42
+      - name: Validate example income.json
+        run: |
+          python3 skills/itr-wala/scripts/validate_income.py skills/itr-wala/assets/example-income.json
+          python3 skills/itr-wala/scripts/tax_engine.py skills/itr-wala/assets/example-income.json > /dev/null

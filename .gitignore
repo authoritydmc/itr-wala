@@ -1,0 +1,21 @@
+# Never commit anyone's tax documents or generated filings
+itr-wala-workspace/
+*AIS*
+*26AS*
+*Form16*
+*form16*
+*TIS*
+*Challan*
+*ACK*
+*.ack
+income.json
+computation.json
+computation.txt
+filing-pack.md
+
+# OS / editor noise
+.DS_Store
+__pycache__/
+*.pyc
+.vscode/
+.idea/
