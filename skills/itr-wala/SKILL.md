@@ -65,6 +65,17 @@ relative to this SKILL.md. Resolve the skill directory once at the start
    Python scripts run locally. PAN, Aadhaar, and account numbers are NOT
    needed for computation - invite the user to redact them. Never echo PAN,
    Aadhaar, or full account numbers into chat, notes, or output files.
+   Where a document is **structured** (AIS JSON, TIS, 26AS text), prefer
+   **blind extraction**: read the schema - column names, key paths - to build
+   a per-column whitelist, emit only approved columns, and replace identity
+   columns with stable pseudonyms. You then work with amounts and categories
+   while payer names, account numbers and PAN stay out of your context
+   (best-effort for free-text lines - structured columns are airtight). See
+   `references/blind-extraction.md`; `scripts/redact_ais.py`,
+   `scripts/parse_26as.py` and `scripts/extract_tis.py` do this already. Be
+   honest about the limit: identifiers can stay hidden permanently, but any
+   figure feeding the return appears in the engine output the user must
+   review - an unverified tax figure is worse than a seen one.
 
 ## Workflow
 
@@ -104,7 +115,10 @@ Walk through `references/documents-guide.md` with the user. Minimum viable
 set for a salaried filer: **Form 16** + **AIS (JSON preferred)**. Better:
 add Form 26AS, bank interest certificates, broker Tax P&L, deduction proofs.
 Ask the user to drop files into `docs/` and tell you. Prefer AIS **JSON**
-export over PDF (OCR-hostile). If the AIS was downloaded weeks ago, ask for a
+export over PDF (OCR-hostile) - but the JSON download is **encrypted**, so
+decrypt it with `scripts/decrypt_ais.py` before anything can read it. Ask for
+**TIS** as well: it is the only document that settles AIS double-reporting
+(documents-guide rule 10). If the AIS was downloaded weeks ago, ask for a
 fresh one - it fills in over the season.
 
 ### 3. Extract
@@ -224,6 +238,7 @@ express something, you say so out loud rather than approximating (rule 8).
 | `references/capital-gains.md` | any equity/MF/crypto/property sale |
 | `references/form-selector.md` | choosing ITR-1/2/3/4 |
 | `references/portal-walkthrough.md` | step 9 filing |
+| `references/blind-extraction.md` | user wants identities kept out of the extraction |
 
 ## Disclaimer to show the user once
 
